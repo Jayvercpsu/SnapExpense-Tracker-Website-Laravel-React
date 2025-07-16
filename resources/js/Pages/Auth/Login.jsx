@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Inertia } from "@inertiajs/inertia";  
+import { Inertia } from "@inertiajs/inertia";
 import TextInput from "../../Components/TextInput";
 import InputLabel from "../../Components/InputLabel";
 import NotificationModal from "../../Components/NotificationModal";
+import InputError from "../../Components/InputError";
 
 export default function Login() {
     const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const [errors, setErrors] = useState({
         email: "",
         password: "",
     });
@@ -23,6 +28,8 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({ email: "", password: "" }); // Reset previous errors
+
         try {
             const response = await fetch("http://127.0.0.1:8000/api/login", {
                 method: "POST",
@@ -40,17 +47,31 @@ export default function Login() {
                 setModalOpen(true);
 
                 setTimeout(() => {
-                    Inertia.visit("/dashboard"); // Redirect to Dashboard after 1 second
+                    Inertia.visit("/dashboard");
                 }, 1000);
             } else {
                 setModalTitle("Login Failed");
                 setModalMessage(result.message || "Login failed");
                 setModalOpen(true);
+
+                // Sample handling for expected error response structure
+                setErrors({
+                    email: result.errors?.email || "",
+                    password: result.errors?.password || "",
+                });
+
+                // If only generic error is returned
+                if (!result.errors) {
+                    setErrors({
+                        email: "Invalid credentials",
+                        password: "Invalid credentials",
+                    });
+                }
             }
         } catch (error) {
             console.error(error);
             setModalTitle("Error");
-            setModalMessage("An error occurred.");
+            setModalMessage("An unexpected error occurred.");
             setModalOpen(true);
         }
     };
@@ -75,6 +96,7 @@ export default function Login() {
                             />
                         )}
                     </TextInput>
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="relative mb-8">
@@ -90,12 +112,11 @@ export default function Login() {
                             <InputLabel
                                 htmlFor="password"
                                 value="Password"
-                                isFocusedOrFilled={
-                                    isActive || formData.password
-                                }
+                                isFocusedOrFilled={isActive || formData.password}
                             />
                         )}
                     </TextInput>
+                    <InputError message={errors.password} className="mt-2" />
                 </div>
 
                 <button
