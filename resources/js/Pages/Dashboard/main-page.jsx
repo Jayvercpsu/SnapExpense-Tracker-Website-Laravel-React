@@ -1,4 +1,6 @@
 import { Link } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
+import LogoutModal from "@/Components/LogoutModal";
 import React, { useState } from "react";
 import { menuItems } from "./Sections/side-bar";
 import {
@@ -20,6 +22,11 @@ const Dashboard = ({ children }) => {
     const toggleProfileDropdown = () => setProfileDropdown(!profileDropdown);
     const toggleDropdown = (dropdown) => {
         setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+    };
+
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const confirmLogout = () => {
+        Inertia.post(route("logout"));
     };
 
     return (
@@ -45,12 +52,10 @@ const Dashboard = ({ children }) => {
                         <FiMenu size={20} />
                     </button>
                 </div>
-
                 <nav className="mt-4 flex-1 overflow-y-auto">
                     {menuItems.map((item) => (
                         <div key={item.id} className="mb-1">
                             {item.path ? (
-                                // Direct Link item
                                 <Link
                                     href={item.path}
                                     className={`w-full flex items-center p-3 mx-1 rounded-lg transition-colors hover:bg-blue-700 ${
@@ -66,8 +71,23 @@ const Dashboard = ({ children }) => {
                                         </span>
                                     )}
                                 </Link>
+                            ) : item.action === "logout" ? (
+                                <button
+                                    onClick={() => setShowLogoutModal(true)}
+                                    className={`w-full flex items-center p-3 mx-1 rounded-lg transition-colors hover:bg-blue-700 ${
+                                        sidebarOpen
+                                            ? "justify-start"
+                                            : "justify-center"
+                                    }`}
+                                >
+                                    <span className="text-lg">{item.icon}</span>
+                                    {sidebarOpen && (
+                                        <span className="ml-3">
+                                            {item.text}
+                                        </span>
+                                    )}
+                                </button>
                             ) : (
-                                // Dropdown item
                                 <button
                                     onClick={() => toggleDropdown(item.id)}
                                     className={`w-full flex items-center p-3 mx-1 rounded-lg transition-colors hover:bg-blue-700 ${
@@ -98,7 +118,6 @@ const Dashboard = ({ children }) => {
                                 </button>
                             )}
 
-                            {/* Dropdown children */}
                             {item.dropdown &&
                                 activeDropdown === item.id &&
                                 sidebarOpen && (
@@ -149,14 +168,12 @@ const Dashboard = ({ children }) => {
                                     >
                                         <FiUser className="mr-2" /> Profile
                                     </Link>
-                                    <Link
-                                        as="button"
-                                        method="post"
-                                        href={route("logout")}
+                                    <button
+                                        onClick={() => setShowLogoutModal(true)}
                                         className="w-full text-left d-block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                                     >
                                         <FiLogOut className="mr-2" /> Logout
-                                    </Link>
+                                    </button>
                                 </div>
                             )}
                         </div>
@@ -165,6 +182,11 @@ const Dashboard = ({ children }) => {
 
                 <main className="p-4 md:p-6">{children}</main>
             </div>
+            <LogoutModal
+                show={showLogoutModal}
+                onClose={() => setShowLogoutModal(false)}
+                onConfirm={confirmLogout}
+            />
         </div>
     );
 };

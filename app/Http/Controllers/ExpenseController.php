@@ -11,7 +11,7 @@ class ExpenseController extends Controller
     public function index()
     {
         $expenses = Expense::latest()->get();
-        return Inertia::render('Dashboard/AddExpense', ['expenses' => $expenses]);
+        return Inertia::render('Dashboard/add-expense', ['expenses' => $expenses]);
     }
 
     public function store(Request $request)
@@ -42,9 +42,12 @@ class ExpenseController extends Controller
         return redirect()->back()->with('success', 'Expense updated successfully.');
     }
 
-    public function destroy(Expense $expense)
-    {
-        $expense->delete();
-        return redirect()->back()->with('success', 'Expense deleted successfully.');
-    }
+   public function destroy($id)
+{
+    $expense = Expense::findOrFail($id);
+    $expense->delete();
+
+    return redirect()->back()->with('success', 'Expense deleted successfully.');
+}
+
 }

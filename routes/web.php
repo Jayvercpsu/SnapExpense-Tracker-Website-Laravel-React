@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Home');
 });
-
+ 
 
 
 Route::get('/dashboard', function () {
@@ -31,8 +32,9 @@ Route::get('/dashboard/profile', function () {
     return Inertia::render('Dashboard/profile', ['page' => 'profile']);
 })->name('dashboard.profile');
 
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect()->route('login');
-})->name('logout');
+Route::get('/dashboard/add-expense', [ExpenseController::class, 'index'])->name('dashboard.add-expense');
+Route::post('/dashboard/add-expense', [ExpenseController::class, 'store'])->name('dashboard.add-expense.store');
+Route::put('/dashboard/add-expense/{expense}', [ExpenseController::class, 'update'])->name('dashboard.add-expense.update'); 
+Route::delete('/dashboard/add-expense/{id}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

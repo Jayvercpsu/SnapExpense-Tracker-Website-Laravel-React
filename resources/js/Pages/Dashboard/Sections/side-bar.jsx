@@ -23,6 +23,6 @@ export const menuItems = [
         id: "logout",
         icon: <FiLogOut />,
         text: "Logout",
-        path: "/dashboard/logout",
+        action: "logout",
     },
 ];
