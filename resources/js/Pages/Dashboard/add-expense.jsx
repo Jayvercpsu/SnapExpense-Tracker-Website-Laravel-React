@@ -4,6 +4,8 @@ import Dashboard from "./main-page";
 import Modal from "@/Components/Modal";
 import InputLabel from "@/Components/InputLabel";
 import DeleteModal from "@/Components/DeleteModal";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 const AddExpense = ({ expenses }) => {
     const [showModal, setShowModal] = useState(false);
@@ -78,7 +80,7 @@ const AddExpense = ({ expenses }) => {
         <Dashboard>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Add Expense</h1>
-                <button
+                <PrimaryButton
                     onClick={() => {
                         setEditExpense(null);
                         setShowModal(true);
@@ -86,7 +88,7 @@ const AddExpense = ({ expenses }) => {
                     className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                     + Add Expense
-                </button>
+                </PrimaryButton>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow">
@@ -121,20 +123,23 @@ const AddExpense = ({ expenses }) => {
                                         {expense.category}
                                     </td>
                                     <td className="p-2 border space-x-2">
-                                        <button
+                                        <PrimaryButton
                                             onClick={() => handleEdit(expense)}
-                                            className="text-blue-600 hover:underline"
+                                            className="bg-blue-600 hover:bg-blue-700"
                                         >
                                             Edit
-                                        </button>
-                                        <button
+                                        </PrimaryButton> 
+
+
+
+                                        <SecondaryButton
                                             onClick={() =>
                                                 handleDeleteRequest(expense.id)
                                             }
                                             className="text-red-600 hover:underline"
                                         >
                                             Delete
-                                        </button>
+                                        </SecondaryButton>
                                     </td>
                                 </tr>
                             ))}
@@ -229,7 +234,7 @@ const AddExpense = ({ expenses }) => {
                         </div>
 
                         <div className="flex justify-end space-x-2 pt-4">
-                            <button
+                            <PrimaryButton
                                 type="button"
                                 onClick={() => {
                                     setShowModal(false);
@@ -238,13 +243,13 @@ const AddExpense = ({ expenses }) => {
                                 className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded"
                             >
                                 Cancel
-                            </button>
-                            <button
+                            </PrimaryButton>
+                            <SecondaryButton
                                 type="submit"
                                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
                             >
                                 Save Expense
-                            </button>
+                            </SecondaryButton>
                         </div>
                     </form>
                 </div>

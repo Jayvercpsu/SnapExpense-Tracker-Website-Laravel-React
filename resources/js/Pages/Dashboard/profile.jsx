@@ -3,6 +3,8 @@ import Dashboard from './main-page';
 import Modal from '@/Components/Modal'; // Adjust the path if needed
 import InputLabel from '@/Components/InputLabel'; // Adjust the path if needed
 import { FiUser, FiMail, FiPhone, FiSettings, FiClock, FiDollarSign } from 'react-icons/fi';
+import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
@@ -50,12 +52,12 @@ const Profile = () => {
                             <span className="text-gray-700">{formData.phone}</span>
                         </div>
                     </div>
-                    <button
+                    <PrimaryButton
                         onClick={() => setShowModal(true)}
                         className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Edit Information
-                    </button>
+                    </PrimaryButton>
                 </section>
             </div>
 
@@ -100,19 +102,19 @@ const Profile = () => {
                         </div>
 
                         <div className="flex justify-end space-x-3">
-                            <button
+                            <PrimaryButton
                                 type="button"
                                 onClick={() => setShowModal(false)}
                                 className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
                             >
                                 Cancel
-                            </button>
-                            <button
+                            </PrimaryButton>
+                            <SecondaryButton
                                 type="submit"
                                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             >
                                 Save Changes
-                            </button>
+                            </SecondaryButton>
                         </div>
                     </form>
                 </div>
