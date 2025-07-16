@@ -74,7 +74,15 @@ const Home = () => {
                                 </button>
                             </div>
 
-                            {activeForm === "login" ? <Login /> : <Signup />}
+                            {activeForm === "login" ? (
+                                <Login />
+                            ) : (
+                                <Signup
+                                    onSwitchToLogin={() =>
+                                        setActiveForm("login")
+                                    }
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

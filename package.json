@@ -6,7 +6,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@inertiajs/react": "^1.0.0",
+        "@inertiajs/react": "^1.3.0",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.12",
@@ -20,6 +20,8 @@
     },
     "dependencies": {
         "@headlessui/react": "^2.2.4",
-        "@heroicons/react": "^2.2.0"
+        "@heroicons/react": "^2.2.0",
+        "@inertiajs/inertia": "^0.11.1",
+        "react-icons": "^5.5.0"
     }
 }
