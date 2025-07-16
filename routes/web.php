@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ExpenseController;
 use Inertia\Inertia;
 
 Route::get('/', function () {

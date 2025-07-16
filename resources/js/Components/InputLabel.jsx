@@ -18,7 +18,7 @@ export default function InputLabel({
                 pointer-events-none 
                 ${isFocusedOrFilled
                     ? 'text-xs -top-2 text-indigo-500 font-medium'
-                    : 'text-sm top-2.5 text-gray-500'
+                    : 'text-sm top-2.5 text-white-500'
                 } 
                 ` + className
             }
